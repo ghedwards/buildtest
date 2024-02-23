@@ -11,7 +11,7 @@
         </exec>
 
         <exec dir="${src}" executable="git" failonerror="true">
-            <arg line=" diff --name-status remotes/origin/main..${BRANCH_COMMIT}"/>
+            <arg line=" diff --name-status ${BRANCH_COMMIT}..remotes/origin/head"/>
         </exec>
      
     </target>
