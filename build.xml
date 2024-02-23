@@ -1,37 +1,19 @@
 <?xml version="1.0"?>
 <project name="buildtest" basedir=".">
-    
-    <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
-
-    <property environment="env" />
-    
-    <!-- svntask setup -->
-    <path id="svnant.classpath">
-        <fileset dir="${env.ANT_HOME}/svnant">
-            <include name="*.jar"/>
-        </fileset>
-    </path>
-
-    <taskdef name="svn" classname="com.googlecode.svntask.SvnTask" classpathref="svnant.classpath"/>
-
     <!-- User Properties -->
     <property name="src" location="." />
     <property name="workspace" location="../" />
     
-    <target name="changes.branches" unless="src_rev">
+    <target name="test">
 
-        <!-- New Way to get log -->
-        <retry retrycount="5" retrydelay="2000">
-            <svn>
-                <copyrevision url="" logProperty="src_rev" />
-            </svn>
-        </retry>
+        <exec dir="${src}" executable="git" failonerror="true">
+            <arg line=" git merge-base test head"/>
+        </exec>
 
-        <retry retrycount="5" retrydelay="2000">
-            <svn>
-                <log path="" startRevision="}" endRevision="" discoverChangedPaths="true" logProperty="svn_log" />
-            </svn>
-        </retry>
+        <exec dir="${src}" executable="git" failonerror="true">
+            <arg line=" git diff --name-status 982e89be0e684613d948653cfa6ed2f5aa1d6eeb..head"/>
+        </exec>
+
     </target>
     
 </project>
