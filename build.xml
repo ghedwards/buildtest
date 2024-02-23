@@ -6,14 +6,14 @@
     
     <target name="test">
 
-        <exec dir="${src}" executable="git" failonerror="true">
-            <arg line=" merge-base testbranch main"/>
+        <exec dir="${src}" executable="git" failonerror="true" outputproperty="BRANCH_COMMIT">
+            <arg line=" merge-base remotes/origin/testbranch head"/>
         </exec>
 
         <exec dir="${src}" executable="git" failonerror="true">
-            <arg line=" diff --name-status 982e89be0e684613d948653cfa6ed2f5aa1d6eeb..main"/>
+            <arg line=" diff --name-status remotes/origin/main..${BRANCH_COMMIT}"/>
         </exec>
-
+     
     </target>
     
 </project>
