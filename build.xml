@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<project name="buildtest" basedir=".">
+    
+    <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
+
+    <property environment="env" />
+    
+    <!-- svntask setup -->
+    <path id="svnant.classpath">
+        <fileset dir="${env.ANT_HOME}/svnant">
+            <include name="*.jar"/>
+        </fileset>
+    </path>
+
+    <taskdef name="svn" classname="com.googlecode.svntask.SvnTask" classpathref="svnant.classpath"/>
+
+    <!-- User Properties -->
+    <property name="src" location="." />
+    <property name="workspace" location="../" />
+    
+    <target name="changes.branches" unless="src_rev">
+
+        <!-- New Way to get log -->
+        <retry retrycount="5" retrydelay="2000">
+            <svn>
+                <copyrevision url="" logProperty="src_rev" />
+            </svn>
+        </retry>
+
+        <retry retrycount="5" retrydelay="2000">
+            <svn>
+                <log path="" startRevision="}" endRevision="" discoverChangedPaths="true" logProperty="svn_log" />
+            </svn>
+        </retry>
+    </target>
+    
+</project>
