@@ -7,11 +7,11 @@
     <target name="test">
 
         <exec dir="${src}" executable="git" failonerror="true" outputproperty="BRANCH_COMMIT">
-            <arg line=" merge-base remotes/origin/testbranch head"/>
+            <arg line=" merge-base remotes/origin/testbranch main"/>
         </exec>
 
         <exec dir="${src}" executable="git" failonerror="true">
-            <arg line=" diff --name-status ${BRANCH_COMMIT}..remotes/origin/head"/>
+            <arg line=" diff --name-status ${BRANCH_COMMIT}..remotes/origin/main"/>
         </exec>
      
     </target>
